@@ -9,7 +9,7 @@ export class PrismaService
 {
   constructor() {
     super({
-      dataSources: {
+      datasources: {
         db: {
           url: 'postgresql://postgres:fearofthedark28@@localhost:5432/access-refresh?schema=public',
         },
