@@ -13,6 +13,17 @@ export class AuthService {
   ) {}
 
   async signupLocal(dto: AuthDto): Promise<Tokens> {
+    // Check if the email is already taken
+    const existingUser = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    if (existingUser) {
+      throw new ForbiddenException('Email is already taken');
+    }
+
     const hash = await this.hashData(dto.password);
     const newUser = await this.prisma.user.create({
       data: {
